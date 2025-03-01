@@ -116,8 +116,6 @@
           renderer.setSize(window.innerWidth, window.innerHeight);
           renderer.setPixelRatio(window.devicePixelRatio);
       
-          const raycaster = new THREE.Raycaster();
-          const pointer = new THREE.Vector3();
           
           // --------- camera ------------
           
@@ -192,29 +190,11 @@
                               console.log(handsObj);
                               handsObj.children[l].position.x = - results.landmarks[0][l].x + 0.5;
                               handsObj.children[l].position.y = - results.landmarks[0][l].y + 0.8;
-                              handsObj.children[l].position.multiplyScalar(- (handScalar - 2));
+                              handsObj.children[l].position.multiplyScalar(4);
                               handsObj.children[l].position.z = - depthZ;
                               
                           }
                           handsObj.scale.set(- handScalar, - handScalar, 1);
-      
-                          pointer.x = handsObj.children[9].position.x;
-                          pointer.y = handsObj.children[9].position.y;
-                          pointer.z = handsObj.children[9].position.z;
-      
-                          raycaster.setFromCamera(pointer, camera);
-      
-                          // calculate objects intersecting the picking ray
-                          raycaster.layers.set( 1 );
-                          const intersects = raycaster.intersectObjects( scene.children );
-      
-                          for ( let i = 0; i < intersects.length; i ++ && results.gestures[0][0].categoryName == "Closed_Fist") {
-      
-                              intersects[ i ].object.material.color.set( 0xff0000 );
-      
-                          }
-      
-                          
                       }
                   }
               }
