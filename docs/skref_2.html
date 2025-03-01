@@ -7,16 +7,33 @@
 </head>
 <body>
 
-    <video id='webcam' autoplay></video>
-    
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://threejs.org/build/three.module.js",
-                "three/addons/": "https://cdn.jsdelivr.net/npm/three/examples/jsm/"
-            }
+    <style>
+        html, body {
+            overflow: hidden;
+            margin: 0;
         }
-    </script>
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    
+    <button id='webcamButton'>ENABLE WEBCAM</button>
+    <div class="container">
+        
+        <video id='webcam' autoplay width="200" height="200" style="left: 0; top: 8px; transform: scaleX(-1);"></video>
+        <canvas id="c"></canvas>
+            
+    </div>
+    
+
+    <script  type="importmap">{
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.174.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three/examples/jsm/"
+        }
+    }</script>
 
     <script type="module">
       
