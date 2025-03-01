@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <video id='webcam' autoplay></video>
+    
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://threejs.org/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+
+      
+      import { GestureRecognizer, FilesetResolver } from 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3';
+      import * as THREE from 'three';
+      import { ARButton } from 'three/addons/webxr/ARButton.js';
+      
+      let gestureRecognizer;
+      let runningMode = 'Video';
+      const handsObj = new THREE.Object3D();
+      
+      // Setja upp gesture recognizer með sjálfgefnar stillingar
+      const createGestureRecognizer = async () => {
+          // configure WASM binary loading
+          const vision = await FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm');
+          // create gesture recognition
+          gestureRecognizer = await GestureRecognizer.createFromOptions(vision, {
+              baseOptions: {
+                  modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/gesture_recognizer/gesture_recognizer/float16/1/gesture_recognizer.task',
+                  delegate: 'CPU'
+              },
+              runningMode: runningMode  // IMAGE (default) eða Video
+          });
+      };
+      createGestureRecognizer();
+      
+      // Fyrir myndband og úttak frá gesture niðustöðum
+      const video = document.getElementById('webcam');
+      
+      
+      init();
+      
+      function init() {
+      
+          const scene = new THREE.Scene();
+      
+          const camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 20 );
+      
+          const light = new THREE.HemisphereLight( 0xffffff, 0xbbbbff, 3 );
+          light.position.set( 0, 0, 0 );
+          scene.add( light );
+      
+          //
+      
+          // 
+          const renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+          renderer.setPixelRatio( window.devicePixelRatio );
+          renderer.setSize( window.innerWidth, window.innerHeight );
+          renderer.setAnimationLoop( animate );
+          renderer.xr.enabled = true;
+          //
+      
+          document.body.appendChild( ARButton.createButton( renderer ) ).addEventListener('click', enableCam);
+      
+      
+          function enableCam(event) {
+              if (!gestureRecognizer) {
+                  alert('Please wait for gestureRecognizer to load');
+                  return;
+              }
+          
+              // getUsermedia parameters.
+              const constraints = {
+                  video: true
+              };
+              // Activate the webcam stream.
+              navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
+                  video.srcObject = stream;
+                  video.addEventListener('loadeddata', predictWebcam);
+              });
+          }
+      
+          let lastVideoTime = -1;
+          let results = undefined;
+          // Fall til að greina gestures í myndbandsstraums myndavélar
+          async function predictWebcam() {
+      
+              let nowInMs = Date.now();
+      
+              if (video.currentTime !== lastVideoTime) {
+                  lastVideoTime = video.currentTime;
+                  // run gesture recognition on video
+                  results = gestureRecognizer.recognizeForVideo(video, nowInMs);
+              }
+      
+              if (results.gestures.length > 0) {
+                  console.log(results.gestures[0][0].categoryName)
+              }
+              
+              // Kallar á endurkvæmt, til að halda áfram að greina gestures
+              window.requestAnimationFrame(predictWebcam);
+      
+          }
+          //
+      
+          CreateHand();
+          scene.add(handsObj);
+      
+      
+          function animate( timestamp, frame ) {
+      
+              if (frame) {
+                  if (results) {
+                      if (results.landmarks.length == 1) {
+          
+                          if (handsObj) {
+          
+                              const pointA = results.landmarks[0][9];
+                              const pointB = results.landmarks[0][0];
+          
+                              const pointDistance = CalculateDistance(pointA.x, pointA.y, pointB.x, pointB.y )
+          
+                              const depthZ = THREE.MathUtils.mapLinear(pointDistance, 0, 1, 1, 10);
+          
+                              for (let l = 0; l < 21; l++) {
+                                  console.log(handsObj);
+                                  handsObj.children[l].position.x = - results.landmarks[0][l].x + 0.5;
+                                  handsObj.children[l].position.y = - results.landmarks[0][l].y + 0.8;
+                                  handsObj.children[l].position.multiplyScalar(4);
+                                  handsObj.children[l].position.z = - depthZ;
+                                  
+                              }
+                          }
+                      }
+                  }
+              }
+              
+      
+              renderer.render( scene, camera );
+      
+          }   
+      
+          function CreateHand() {
+              const sphereMat = new THREE.MeshNormalMaterial();
+          
+              const sphereGeo = new THREE.SphereGeometry(0.025, 8, 4);
+              const sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
+          
+                for (let i = 0; i < 21; i++) {
+                  const sphereMeshClone = sphereMesh.clone();
+                  handsObj.add(sphereMeshClone);
+                }
+          }
+      
+          function CalculateDistance(x1, y1, x2, y2) {
+              const deltaX = x2 - x1;
+              const deltaY = y2 - y1;
+              return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+          }
+      }
+    </script>
+</body>
+</html>
