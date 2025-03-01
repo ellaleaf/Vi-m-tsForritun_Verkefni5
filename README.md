@@ -37,3 +37,13 @@ for (let l = 0; l < 21; l++) {
   
 }
 ```
+til þess að fá depthZ sem er z-hnit handarinnar tekur maður tvo landmark punkta, ég notaði punkta 0 og 9, síðan er reiknað lengd á milli punktana sem er breytt í notanleg hnit.
+
+```javascript
+const pointA = results.landmarks[0][9];
+const pointB = results.landmarks[0][0];
+
+const pointDistance = CalculateDistance(pointA.x, pointA.y, pointB.x, pointB.y )
+
+const depthZ = THREE.MathUtils.mapLinear(pointDistance, 0, 1, -3, 5);
+```
