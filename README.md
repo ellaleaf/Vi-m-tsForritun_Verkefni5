@@ -50,5 +50,9 @@ const depthZ = THREE.MathUtils.mapLinear(pointDistance, 0, 1, -3, 5);
 
 eftir þetta fékk ég fullnægjandi [niðurstöður](https://ellaleaf.github.io/Vi-m-tsForritun_Verkefni5/skref_1.html)
 
-**[Skref 2]()** næst vildi ég geta interact-að við heiminn.
-ég byrjaði á því að nota raycasting og nota bara eina kúlu í hendinni, en það varð ruglandi svo ég ákvað að nota bara eina kúlu
+**[Skref 2](https://github.com/ellaleaf/Vi-m-tsForritun_Verkefni5/blob/1941554a79ea5393b2d5b5eea7330ecfea7c7df3/docs/skref_2.html)** næst vildi ég geta interact-að við heiminn.
+ég byrjaði á því að nota raycasting og nota bara eina kúlu í hendinni, en það varð ruglandi svo ég ákvað að nota bara eina kúlu. til þess að gera það minkaði ég hversu margar kúlur voru búnar til í CreateHand() og tók út for loopið.
+
+þegar að ég reyndi að nota raycaster fyrst var það bæði hægt og buggy, en ég fann [þennan kóða](https://stackoverflow.com/questions/11473755/how-to-detect-collision-in-three-js) sem virkaði betur en það sem ég notaði áður en var enþá hægt.
+
+eftir að gera allt þetta var ekki mikill tími eftir svo ég ákvað að [þetta](https://ellaleaf.github.io/Vi-m-tsForritun_Verkefni5/skref_2.html) var nógu gott
