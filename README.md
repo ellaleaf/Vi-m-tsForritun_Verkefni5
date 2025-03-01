@@ -47,3 +47,5 @@ const pointDistance = CalculateDistance(pointA.x, pointA.y, pointB.x, pointB.y )
 
 const depthZ = THREE.MathUtils.mapLinear(pointDistance, 0, 1, -3, 5);
 ```
+
+eftir þetta fékk ég fullnægjandi [niðurstöður](https://ellaleaf.github.io/Vi-m-tsForritun_Verkefni5/skref_1.html)
