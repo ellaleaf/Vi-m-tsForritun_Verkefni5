@@ -24,3 +24,16 @@ function CreateHand() {
       }
 }
 ```
+
+eftir að instantiate-a function-ið í three.js senuna er sett for loop í animation/render function-ið þar sem hver kúla er gefið sömu hnit og landmark resultin.
+
+```javascript
+for (let l = 0; l < 21; l++) {
+  console.log(handsObj);
+  handsObj.children[l].position.x = - results.landmarks[0][l].x + 0.5;
+  handsObj.children[l].position.y = - results.landmarks[0][l].y + 0.8;
+  handsObj.children[l].position.multiplyScalar(4);
+  handsObj.children[l].position.z = - depthZ;
+  
+}
+```
