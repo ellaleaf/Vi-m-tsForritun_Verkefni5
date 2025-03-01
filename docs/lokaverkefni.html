@@ -59,20 +59,7 @@
             light.position.set( 0, 0, 0 );
             scene.add( light );
         
-            // ----------- box -----------
-            const boxWidth = 0.5;
-            const boxHeight = 0.5;
-            const boxDepth = 0.5;
-            const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
-            
-            
-            // use hex color code
-            const material = new THREE.MeshPhongMaterial({color: 0x44aa88});
-            
-            const cube = new THREE.Mesh(geometry, material);
-            cube.rotation.set(1,2,1);
-            cube.position.set(0,0,5);
-            cube.layers.enable( 2 );
+            //
         
             // 
             const renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
@@ -144,29 +131,13 @@
             
                                 const depthZ = THREE.MathUtils.mapLinear(pointDistance, 0, 1, 1, 10);
             
-                                
-                                handsObj.children[0].position.x = - results.landmarks[0][9].x + 0.5;
-                                handsObj.children[0].position.y = - results.landmarks[0][9].y + 0.5;
-                                handsObj.children[0].position.multiplyScalar(4);
-                                handsObj.children[0].position.z = depthZ;
-            
-            
-                                for (var vertexIndex = 0; vertexIndex < handsObj.children[0].geometry.attributes.position.array.length; vertexIndex++) {  
-                                    let localVertex = new THREE.Vector3().fromBufferAttribute(handsObj.children[0].geometry.attributes.position, vertexIndex).clone();
-                                    let globalVertex = localVertex.applyMatrix4(handsObj.children[0].matrix);
-                                    let directionVector = globalVertex.sub( handsObj.children[0].position );
+                                for (let l = 0; l < 21; l++) {
+                                    console.log(handsObj);
+                                    handsObj.children[l].position.x = - results.landmarks[0][l].x + 0.5;
+                                    handsObj.children[l].position.y = - results.landmarks[0][l].y + 0.8;
+                                    handsObj.children[l].position.multiplyScalar(4);
+                                    handsObj.children[l].position.z = - depthZ;
                                     
-                                    let ray = new THREE.Raycaster( handsObj.children[0].position, directionVector.clone().normalize() );
-                                    ray.layers.set( 2 );
-                                    let collisionResults = ray.intersectObjects( scene.children );
-            
-                                    if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) {
-                                        if (results.gestures[0][0].categoryName == "Closed_Fist") {
-                                            collisionResults[ 0 ].object.position.x = handsObj.children[0].position.x;
-                                            collisionResults[ 0 ].object.position.y = handsObj.children[0].position.y;
-                                            collisionResults[ 0 ].object.position.z = handsObj.children[0].position.z;
-                                        }
-                                    }
                                 }
                             }
                         }
