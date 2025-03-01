@@ -49,3 +49,6 @@ const depthZ = THREE.MathUtils.mapLinear(pointDistance, 0, 1, -3, 5);
 ```
 
 eftir þetta fékk ég fullnægjandi [niðurstöður](https://ellaleaf.github.io/Vi-m-tsForritun_Verkefni5/skref_1.html)
+
+**[Skref 2]()** næst vildi ég geta interact-að við heiminn.
+ég byrjaði á því að nota raycasting og nota bara eina kúlu í hendinni, en það varð ruglandi svo ég ákvað að nota bara eina kúlu
