@@ -63,3 +63,5 @@ eftir að gera allt þetta var ekki mikill tími eftir svo ég ákvað að [þet
 
 ## Útkoma
 https://ellaleaf.github.io/Vi-m-tsForritun_Verkefni5/
+
+því miður gat ég ekki gert einmitt það sem ég vildi vegna tímaskorts og annara takmarka. en annars held ég að þetta er fínt.
