@@ -57,4 +57,9 @@ eftir þetta fékk ég fullnægjandi [niðurstöður](https://ellaleaf.github.io
 
 eftir að gera allt þetta var ekki mikill tími eftir svo ég ákvað að [þetta](https://ellaleaf.github.io/Vi-m-tsForritun_Verkefni5/skref_2.html) var nógu gott
 
-**[Loka Skref]()** á meða ég var að gera skref 2 var ég farin að spá í hvort það var ástæða fyrir því að ég var að nota fremri myndavélina og afhverju ég reyndi aldrei að nota bakmyndavél eftir skref 1, en núna átti ég lítin tíma eftir og ég var komin með allt sem ég þurfti.
+**[Loka Skref](https://github.com/ellaleaf/Vi-m-tsForritun_Verkefni5/blob/11d7d952c8f707c8eba2745cae4c99e65626c64c/docs/lokaverkefni.html)** á meða ég var að gera skref 2 var ég farin að spá í hvort það var ástæða fyrir því að ég var að nota fremri myndavélina og afhverju ég reyndi aldrei að nota bakmyndavél eftir skref 1, en núna átti ég lítin tíma eftir og ég var komin með allt sem ég þurfti.
+
+ég notaði verkefnið sem ég gerði í xr fyrir grunn og setti skref 1 inn í það, sem virkaði en það var mjög hægt. hér er [niðurstaðan](https://ellaleaf.github.io/Vi-m-tsForritun_Verkefni5/lokaverkefni.html).
+
+## Útkoma
+https://ellaleaf.github.io/Vi-m-tsForritun_Verkefni5/
